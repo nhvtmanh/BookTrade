@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BookTradeAPI.Models;
+namespace BookTradeAPI.Models.Entities;
 
 public partial class Payment
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BookTradeAPI.Models;
+namespace BookTradeAPI.Models.Entities;
 
 public partial class BookExchange
 {
@@ -14,6 +14,8 @@ public partial class BookExchange
     public string? Description { get; set; }
 
     public byte Condition { get; set; }
+
+    public int Quantity { get; set; }
 
     public int? CreatedQuantity { get; set; }
 
@@ -28,6 +30,8 @@ public partial class BookExchange
     public int? UserId { get; set; }
 
     public virtual ICollection<BookExchangeDetail> BookExchangeDetails { get; set; } = new List<BookExchangeDetail>();
+
+    public virtual ICollection<BookExchangePost> BookExchangePosts { get; set; } = new List<BookExchangePost>();
 
     public virtual Category? Category { get; set; }
 
