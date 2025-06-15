@@ -29,6 +29,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 // Register main services
 builder.Services.AddScoped<IS_Book, S_Book>();
 builder.Services.AddScoped<IS_BookExchange, S_BookExchange>();
+builder.Services.AddScoped<IS_Category, S_Category>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
