@@ -47,7 +47,7 @@ public partial class ApplicationDbContext : DbContext
     {
         modelBuilder.Entity<Book>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Book__3213E83FA1A40520");
+            entity.HasKey(e => e.Id).HasName("PK__Book__3213E83F3E5E5975");
 
             entity.ToTable("Book");
 
@@ -93,7 +93,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<BookExchange>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83F5CEAFA93");
+            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83F02B54B05");
 
             entity.ToTable("BookExchange");
 
@@ -129,7 +129,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<BookExchangeDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83FBF50DBCB");
+            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83F43D8FDA4");
 
             entity.ToTable("BookExchangeDetail");
 
@@ -144,7 +144,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<BookExchangePost>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83FD460204D");
+            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83F6C32720A");
 
             entity.ToTable("BookExchangePost");
 
@@ -163,7 +163,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<BookReview>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookRevi__3213E83F0C55F430");
+            entity.HasKey(e => e.Id).HasName("PK__BookRevi__3213E83F09D90524");
 
             entity.ToTable("BookReview");
 
@@ -187,7 +187,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Cart__3213E83FFD3F9AE0");
+            entity.HasKey(e => e.Id).HasName("PK__Cart__3213E83F23457387");
 
             entity.ToTable("Cart");
 
@@ -201,7 +201,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<CartItem>(entity =>
         {
-            entity.HasKey(e => new { e.CartId, e.BookId }).HasName("PK__CartItem__2A65FB89DD4A7C38");
+            entity.HasKey(e => new { e.CartId, e.BookId }).HasName("PK__CartItem__2A65FB89C52349FC");
 
             entity.ToTable("CartItem");
 
@@ -222,7 +222,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Category__3213E83F8E914443");
+            entity.HasKey(e => e.Id).HasName("PK__Category__3213E83F0DCDE6AB");
 
             entity.ToTable("Category");
 
@@ -234,7 +234,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Order__3213E83F3DFF7016");
+            entity.HasKey(e => e.Id).HasName("PK__Order__3213E83F4D0242D4");
 
             entity.ToTable("Order");
 
@@ -263,7 +263,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.HasKey(e => new { e.OrderId, e.BookId }).HasName("PK__OrderIte__42C9B38708452ADF");
+            entity.HasKey(e => new { e.OrderId, e.BookId }).HasName("PK__OrderIte__42C9B3876FB91B1E");
 
             entity.ToTable("OrderItem");
 
@@ -284,7 +284,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Payment__3213E83FE0C83E58");
+            entity.HasKey(e => e.Id).HasName("PK__Payment__3213E83F7576B488");
 
             entity.ToTable("Payment");
 
@@ -297,11 +297,11 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3213E83F43833077");
+            entity.HasKey(e => e.Id).HasName("PK__User__3213E83F632CBE75");
 
             entity.ToTable("User");
 
-            entity.HasIndex(e => e.Email, "UQ__User__AB6E616456B855E4").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__User__AB6E6164793A505B").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Address)
@@ -339,7 +339,7 @@ public partial class ApplicationDbContext : DbContext
                         .HasConstraintName("FK__FavoriteB__user___5535A963"),
                     j =>
                     {
-                        j.HasKey("UserId", "BookId").HasName("PK__Favorite__BD2EE6A1BAF63B1B");
+                        j.HasKey("UserId", "BookId").HasName("PK__Favorite__BD2EE6A1D264503C");
                         j.ToTable("FavoriteBook");
                         j.IndexerProperty<int>("UserId").HasColumnName("user_id");
                         j.IndexerProperty<int>("BookId").HasColumnName("book_id");

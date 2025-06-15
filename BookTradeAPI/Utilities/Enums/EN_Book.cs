@@ -7,5 +7,11 @@
             New,
             Old,
         }
+        public enum Status
+        {
+            Available,
+            NotAvailable,
+            SoldOut
+        }
     }
 }

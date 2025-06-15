@@ -9,6 +9,9 @@ namespace BookTradeAPI.Libs.Mapper
     {
         public AutoMapperProfile()
         {
+            CreateMap<MReq_Book, Book>().ReverseMap();
+            CreateMap<MRes_Book, Book>().ReverseMap();
+
             CreateMap<MReq_BookExchange, BookExchange>().ReverseMap();
             CreateMap<MRes_BookExchange, BookExchange>().ReverseMap();
 

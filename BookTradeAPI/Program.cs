@@ -27,6 +27,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
 // Register main services
+builder.Services.AddScoped<IS_Book, S_Book>();
 builder.Services.AddScoped<IS_BookExchange, S_BookExchange>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

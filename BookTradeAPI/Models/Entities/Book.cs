@@ -17,13 +17,13 @@ public partial class Book
 
     public byte Status { get; set; }
 
-    public int? StockQuantity { get; set; }
+    public int StockQuantity { get; set; }
 
-    public int? SoldQuantity { get; set; }
+    public int SoldQuantity { get; set; }
 
-    public decimal? BasePrice { get; set; }
+    public decimal BasePrice { get; set; }
 
-    public decimal? DiscountPrice { get; set; }
+    public decimal DiscountPrice { get; set; }
 
     public decimal? AverageRating { get; set; }
 
