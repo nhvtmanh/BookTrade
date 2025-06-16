@@ -16,9 +16,9 @@ namespace BookTradeAPI.Models.Response
 
         public int Quantity { get; set; }
 
-        public int? CreatedQuantity { get; set; }
+        public int CreatedQuantity { get; set; }
 
-        public int? ExchangeableQuantity { get; set; }
+        public int ExchangeableQuantity { get; set; }
 
         public string? ImageUrl { get; set; }
 
@@ -29,6 +29,8 @@ namespace BookTradeAPI.Models.Response
         public int? UserId { get; set; }
 
         public virtual ICollection<BookExchangeDetail> BookExchangeDetails { get; set; } = new List<BookExchangeDetail>();
+
+        public virtual ICollection<BookExchangePost> BookExchangePosts { get; set; } = new List<BookExchangePost>();
 
         public virtual Category? Category { get; set; }
 

@@ -17,9 +17,9 @@ public partial class BookExchange
 
     public int Quantity { get; set; }
 
-    public int? CreatedQuantity { get; set; }
+    public int CreatedQuantity { get; set; }
 
-    public int? ExchangeableQuantity { get; set; }
+    public int ExchangeableQuantity { get; set; }
 
     public string? ImageUrl { get; set; }
 
