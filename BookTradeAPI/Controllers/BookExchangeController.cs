@@ -63,5 +63,12 @@ namespace BookTradeAPI.Controllers
             var res = await _s_BookExchange.Post(request);
             return Ok(res);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var res = await _s_BookExchange.Delete(id);
+            return Ok(res);
+        }
     }
 }

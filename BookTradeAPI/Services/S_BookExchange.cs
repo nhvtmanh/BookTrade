@@ -15,6 +15,7 @@ namespace BookTradeAPI.Services
     {
         Task<ApiResponse<MRes_BookExchange>> Create(MReq_BookExchange request);
         Task<ApiResponse<MRes_BookExchange>> Update(MReq_BookExchange request);
+        Task<ApiResponse<MRes_BookExchange>> Delete(int id);
         Task<ApiResponse<MRes_BookExchangePost>> Post(MReq_BookExchangePost request);
     }
     public class S_BookExchange : IS_BookExchange
@@ -110,6 +111,38 @@ namespace BookTradeAPI.Services
             response.StatusCode = StatusCodes.Status200OK;
             response.Data = _mapper.Map<MRes_BookExchange>(bookExchange);
             response.Message = [MessageErrorConstant.UPDATE_SUCCESS];
+            return response;
+        }
+        
+        public async Task<ApiResponse<MRes_BookExchange>> Delete(int id)
+        {
+            var response = new ApiResponse<MRes_BookExchange>();
+
+            var data = await _dbContext.BookExchanges
+                .Include(x => x.BookExchangeDetails)
+                .Include(x => x.BookExchangePosts)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if (data == null)
+            {
+                response.StatusCode = StatusCodes.Status404NotFound;
+                response.Message = [MessageErrorConstant.NOT_FOUND];
+                return response;
+            }
+
+            if (data.ExchangeableQuantity > 0)
+            {
+                response.StatusCode = StatusCodes.Status400BadRequest;
+                response.Message = ["Không thể xóa vì đã tồn tại sách để trao đổi"];
+                return response;
+            }
+
+            _dbContext.BookExchangeDetails.RemoveRange(data.BookExchangeDetails);
+            _dbContext.BookExchanges.Remove(data);
+            await _dbContext.SaveChangesAsync();
+
+            response.StatusCode = StatusCodes.Status200OK;
+            response.Data = _mapper.Map<MRes_BookExchange>(data);
+            response.Message = [MessageErrorConstant.DELETE_SUCCESS];
             return response;
         }
 
