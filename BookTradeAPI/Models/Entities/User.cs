@@ -1,25 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace BookTradeAPI.Models.Entities;
 
-public partial class User
+public partial class User : IdentityUser<int>
 {
-    public int Id { get; set; }
-
-    public string Email { get; set; } = null!;
-
-    public string PasswordHash { get; set; } = null!;
-
     public string FullName { get; set; } = null!;
-
-    public string PhoneNumber { get; set; } = null!;
 
     public string Address { get; set; } = null!;
 
     public string? AvatarUrl { get; set; }
-
-    public string Role { get; set; } = null!;
 
     public virtual ICollection<BookExchange> BookExchanges { get; set; } = new List<BookExchange>();
 
