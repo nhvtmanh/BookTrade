@@ -1,18 +1,8 @@
 ﻿using BookTradeAPI.Models.Common;
-using BookTradeAPI.Models.Entities;
 using BookTradeAPI.Models.Response;
 using BookTradeAPI.Services;
-using BookTradeAPI.Utilities.Constants;
 using BookTradeAPI.Utilities.ModelValidations;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using static BookTradeAPI.Models.Request.MReq_User;
 
 namespace BookTradeAPI.Controllers

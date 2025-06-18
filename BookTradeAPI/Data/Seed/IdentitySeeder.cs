@@ -1,8 +1,6 @@
 ﻿using BookTradeAPI.Models.Entities;
-using BookTradeAPI.Models.Request;
 using BookTradeAPI.Utilities.Constants;
 using Microsoft.AspNetCore.Identity;
-using static BookTradeAPI.Models.Request.MReq_User;
 
 namespace BookTradeAPI.Data.Seed
 {

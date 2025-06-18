@@ -1,17 +1,14 @@
 ﻿using AutoMapper;
 using BookTradeAPI.Models.Common;
 using BookTradeAPI.Models.Entities;
-using BookTradeAPI.Models.Request;
 using BookTradeAPI.Models.Response;
 using BookTradeAPI.Utilities.Constants;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using static BookTradeAPI.Models.Request.MReq_User;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookTradeAPI.Services
 {
@@ -87,7 +84,7 @@ namespace BookTradeAPI.Services
 
             var jwtConfig = _configuration.GetSection("Jwt");
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig["SecretKey"]!));
-            
+
             var token = new JwtSecurityToken(
                 issuer: jwtConfig["Issuer"],
                 audience: jwtConfig["Audience"],

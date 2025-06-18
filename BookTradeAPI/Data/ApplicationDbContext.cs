@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using BookTradeAPI.Models.Entities;
+﻿using BookTradeAPI.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
