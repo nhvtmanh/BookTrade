@@ -50,7 +50,7 @@ namespace BookTradeAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(MReq_BookExchangePost request)
+        public async Task<IActionResult> Post([FromForm] MReq_BookExchangePost request)
         {
             if (!ModelState.IsValid)
             {
