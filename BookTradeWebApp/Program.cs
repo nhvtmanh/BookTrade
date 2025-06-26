@@ -17,6 +17,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.MapControllerRoute(
+    name: "BookExchange",
+    pattern: "book-exchange",
+    defaults: new { controller = "BookExchange", action = "Index" });
 
 app.UseAuthorization();
 

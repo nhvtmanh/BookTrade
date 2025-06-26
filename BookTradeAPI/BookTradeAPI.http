@@ -1,6 +1,0 @@
-@BookTradeAPI_HostAddress = http://localhost:5211
-
-GET {{BookTradeAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
