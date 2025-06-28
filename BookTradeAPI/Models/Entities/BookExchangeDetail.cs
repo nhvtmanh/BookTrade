@@ -12,4 +12,8 @@ public partial class BookExchangeDetail
     public int? BookExchangeId { get; set; }
 
     public virtual BookExchange? BookExchange { get; set; }
+
+    public virtual ICollection<BookExchangeRequest> BookExchangeRequestChooseBookExchangeDetails { get; set; } = new List<BookExchangeRequest>();
+
+    public virtual ICollection<BookExchangeRequest> BookExchangeRequestPostBookExchangeDetails { get; set; } = new List<BookExchangeRequest>();
 }

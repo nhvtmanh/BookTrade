@@ -22,6 +22,6 @@ body {
 }
 
 .dropdown-item.active, .dropdown-item:active {
-    background-color: #717fe0 !important;
-    color: #fff !important;
+    background-color: #f8f9fa !important;
+    color: inherit !important;
 }

@@ -1,5 +1,6 @@
 using BookTradeAPI.Data;
 using BookTradeAPI.Data.Seed;
+using BookTradeAPI.Libs.Hubs;
 using BookTradeAPI.Libs.Mapper;
 using BookTradeAPI.Models.Entities;
 using BookTradeAPI.Services;
@@ -59,14 +60,33 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)),
             RoleClaimType = ClaimTypes.Role
         };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                // For SignalR authentication over WebSocket
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notificationHub"))
+                {
+                    context.Token = accessToken;
+                }
+
+                return Task.CompletedTask;
+            }
+        };
     });
 builder.Services.AddAuthorization();
+builder.Services.AddSignalR();
 
 // Register main services
 builder.Services.AddScoped<IS_Auth, S_Auth>();
 builder.Services.AddScoped<IS_Book, S_Book>();
 builder.Services.AddScoped<IS_BookExchange, S_BookExchange>();
 builder.Services.AddScoped<IS_Category, S_Category>();
+builder.Services.AddScoped<IS_BookExchangePost, S_BookExchangePost>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -118,9 +138,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(options => options
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+    .SetIsOriginAllowed(origin => true));
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

@@ -7,5 +7,7 @@
         public const string DELETE_SUCCESS = "Xóa thành công";
 
         public const string NOT_FOUND = "Không tìm thấy dữ liệu";
+        public const string NO_FILE_UPLOAD = "Không có file được upload";
+        public const string INVALID_IMAGE_FILE_FORMAT = "Vui lòng tải lên ảnh có định dạng .jpg, .jpeg hoặc .png";
     }
 }

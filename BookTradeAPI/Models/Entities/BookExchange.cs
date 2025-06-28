@@ -35,5 +35,9 @@ public partial class BookExchange
 
     public virtual Category? Category { get; set; }
 
+    public virtual ICollection<OrderBookExchange> OrderBookExchangeChooseBookExchanges { get; set; } = new List<OrderBookExchange>();
+
+    public virtual ICollection<OrderBookExchange> OrderBookExchangePostBookExchanges { get; set; } = new List<OrderBookExchange>();
+
     public virtual User? User { get; set; }
 }

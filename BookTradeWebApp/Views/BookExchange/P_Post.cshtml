@@ -1,0 +1,47 @@
+﻿@model M_BookExchangePost
+
+<!-- Modal Header -->
+<div class="modal-header">
+    <h5 class="modal-title text-gray-900" id="postModalLabel">
+        <span>Add new post</span>
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- Modal Body -->
+<div class="modal-body">
+    <form id="postForm" method="post" asp-antiforgery="true">
+        <div class="form-row">
+            <!-- Book Exchange select -->
+            <div class="form-group col-md-5">
+                <label asp-for="BookExchangeId" class="text-gray-800">Book Exchange <span class="text-danger">*</span></label>
+                <select asp-for="BookExchangeId" asp-items="ViewBag.BookExchanges" class="form-control" required>
+                    <option value="">Select book exchange</option>
+                </select>
+                <span asp-validation-for="BookExchangeId"></span>
+            </div>
+
+            <!-- Exchangeable Quantity -->
+            <div class="form-group col">
+                <label asp-for="ExchangeableQuantity" class="text-gray-800">Exchangeable Quantity <span class="text-danger">*</span></label>
+                <input asp-for="ExchangeableQuantity" class="form-control" placeholder="Enter the exchangeable quantity ..." required>
+                <span asp-validation-for="ExchangeableQuantity"></span>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="form-group">
+            <label asp-for="Content" class="text-gray-800">Content <span class="text-danger">*</span></label>
+            <textarea asp-for="Content" class="form-control" rows="2" placeholder="Enter the content ..." required></textarea>
+            <span asp-validation-for="Content"></span>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" onclick="Submit()">Save</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+</div>

@@ -20,9 +20,11 @@
     <link rel="stylesheet" href="vendor/slick/slick.css">
     <link rel="stylesheet" href="vendor/MagnificPopup/magnific-popup.css">
     <link rel="stylesheet" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="css/sb-admin-2.min.css">
     <link rel="stylesheet" href="css/util.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body class="animsition">
     <!-- Header -->
@@ -50,6 +52,10 @@
                             <li class="active-menu">
                                 <a href="/book-exchange">Exchange</a>
                             </li>
+
+                            <li>
+                                <a href="/book">Book</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -59,6 +65,73 @@
                             <i class="zmdi zmdi-shopping-cart"></i>
                         </a>
 
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti dropdown no-arrow" data-notify="2">
+                            <i class="zmdi zmdi-notifications" data-toggle="dropdown" aria-expanded="false"></i>
+                            <div class="dropdown-menu shadow p-0" style="font-family: Poppins-Regular; color: #555; line-height: 1.5; width: 400px;">
+                                <h6 class="dropdown-header text-center font-weight-bold py-3" style="color: #fff; background-color: #717fe0; border-radius: 0.25rem 0.25rem 0 0;">
+                                    Notifications
+                                </h6>
+                                <a href="#" class="dropdown-item d-flex justify-content-center align-items-center">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" style="width: 2.5rem; height: 2.5rem;" src="images/avatar.png" alt="IMG-AVATAR">
+                                    </div>
+                                    <div>
+                                        <div class="font-weight-bold" style="text-wrap: wrap;">
+                                            Hi there! I am wondering if you can help me with a
+                                            problem I've been having.
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center text-secondary">
+                                            <div>
+                                                Manh Nguyen
+                                            </div>
+                                            <div>
+                                                27/06/2025 11:30 AM
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="dropdown-item d-flex justify-content-center align-items-center">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" style="width: 2.5rem; height: 2.5rem;" src="images/avatar.png" alt="IMG-AVATAR">
+                                    </div>
+                                    <div>
+                                        <div class="font-weight-bold" style="text-wrap: wrap;">
+                                            Hi there! I am wondering if you can help me with a
+                                            problem I've been having.
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center text-secondary">
+                                            <div>
+                                                Manh Nguyen
+                                            </div>
+                                            <div>
+                                                27/06/2025 11:30 AM
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="dropdown-item d-flex justify-content-center align-items-center">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" style="width: 2.5rem; height: 2.5rem;" src="images/avatar.png" alt="IMG-AVATAR">
+                                    </div>
+                                    <div>
+                                        <div class="font-weight-bold" style="text-wrap: wrap;">
+                                            Hi there! I am wondering if you can help me with a
+                                            problem I've been having.
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center text-secondary">
+                                            <div>
+                                                Manh Nguyen
+                                            </div>
+                                            <div>
+                                                27/06/2025 11:30 AM
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#" class="dropdown-item text-center">Read more</a>
+                            </div>
+                        </div>
+                        
                         <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 dropdown no-arrow">
                             <i class="zmdi zmdi-account" data-toggle="dropdown" aria-expanded="false"></i>
                             <div class="dropdown-menu shadow" style="font-family: Poppins-Regular; color: #555; line-height: 1.5;">
@@ -255,11 +328,14 @@
     <script src="vendor/isotope/isotope.pkgd.min.js"></script>
     <script src="vendor/sweetalert/sweetalert.min.js"></script>
     <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
     @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
     <script src="js/main.js"></script>
     <script src="js/slick-custom.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="js/notification.js"></script>
+    <script src="js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

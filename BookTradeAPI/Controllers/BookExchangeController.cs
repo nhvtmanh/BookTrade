@@ -3,11 +3,13 @@ using BookTradeAPI.Models.Request;
 using BookTradeAPI.Models.Response;
 using BookTradeAPI.Services;
 using BookTradeAPI.Utilities.ModelValidations;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BookTradeAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class BookExchangeController : ControllerBase
@@ -17,6 +19,13 @@ namespace BookTradeAPI.Controllers
         public BookExchangeController(IS_BookExchange s_BookExchange)
         {
             _s_BookExchange = s_BookExchange;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var res = await _s_BookExchange.GetAll();
+            return Ok(res);
         }
 
         [HttpPost]
@@ -30,6 +39,8 @@ namespace BookTradeAPI.Controllers
                     Message = ModelValidationErrorMessage.GetErrorMessage(ModelState)
                 });
             }
+            request.UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
             var res = await _s_BookExchange.Create(request);
             return Ok(res);
         }

@@ -7,12 +7,12 @@ using BookTradeAPI.Models.Response;
 using BookTradeAPI.Utilities.Constants;
 using BookTradeAPI.Utilities.Enums;
 using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 
 namespace BookTradeAPI.Services
 {
     public interface IS_BookExchange
     {
+        Task<ApiResponse<List<MRes_BookExchange>>> GetAll();
         Task<ApiResponse<MRes_BookExchange>> Create(MReq_BookExchange request);
         Task<ApiResponse<MRes_BookExchange>> Update(MReq_BookExchange request);
         Task<ApiResponse<MRes_BookExchange>> Delete(int id);
@@ -27,6 +27,19 @@ namespace BookTradeAPI.Services
         {
             _dbContext = dbContext;
             _mapper = mapper;
+        }
+
+        public async Task<ApiResponse<List<MRes_BookExchange>>> GetAll()
+        {
+            var response = new ApiResponse<List<MRes_BookExchange>>();
+
+            var data = await _dbContext.BookExchanges
+                .AsNoTracking()
+                .ToListAsync();
+
+            response.StatusCode = StatusCodes.Status200OK;
+            response.Data = _mapper.Map<List<MRes_BookExchange>>(data);
+            return response;
         }
 
         public async Task<ApiResponse<MRes_BookExchange>> Create(MReq_BookExchange request)
@@ -113,7 +126,7 @@ namespace BookTradeAPI.Services
             response.Message = [MessageErrorConstant.UPDATE_SUCCESS];
             return response;
         }
-        
+
         public async Task<ApiResponse<MRes_BookExchange>> Delete(int id)
         {
             var response = new ApiResponse<MRes_BookExchange>();

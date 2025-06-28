@@ -20,6 +20,10 @@ public partial class User : IdentityUser<int>
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
+    public virtual ICollection<OrderBookExchange> OrderBookExchangeChooseUsers { get; set; } = new List<OrderBookExchange>();
+
+    public virtual ICollection<OrderBookExchange> OrderBookExchangePostUsers { get; set; } = new List<OrderBookExchange>();
+
     public virtual ICollection<Order> OrderBuyers { get; set; } = new List<Order>();
 
     public virtual ICollection<Order> OrderSellers { get; set; } = new List<Order>();
