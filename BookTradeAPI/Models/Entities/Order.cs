@@ -15,7 +15,7 @@ public partial class Order
 
     public int? BuyerId { get; set; }
 
-    public int? SellerId { get; set; }
+    public int? ShopId { get; set; }
 
     public int? PaymentId { get; set; }
 
@@ -25,5 +25,5 @@ public partial class Order
 
     public virtual Payment? Payment { get; set; }
 
-    public virtual User? Seller { get; set; }
+    public virtual Shop? Shop { get; set; }
 }

@@ -42,6 +42,8 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
     public virtual DbSet<Payment> Payments { get; set; }
 
+    public virtual DbSet<Shop> Shops { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
 
@@ -51,7 +53,7 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
         modelBuilder.Entity<Book>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Book__3213E83FE7139005");
+            entity.HasKey(e => e.Id).HasName("PK__Book__3213E83FC9111978");
 
             entity.ToTable("Book");
 
@@ -77,6 +79,7 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
             entity.Property(e => e.ImageUrl)
                 .HasMaxLength(255)
                 .HasColumnName("image_url");
+            entity.Property(e => e.ShopId).HasColumnName("shop_id");
             entity.Property(e => e.SoldQuantity).HasColumnName("sold_quantity");
             entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.StockQuantity).HasColumnName("stock_quantity");
@@ -84,20 +87,19 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
                 .HasMaxLength(255)
                 .HasColumnName("title");
             entity.Property(e => e.TotalRating).HasColumnName("total_rating");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.Category).WithMany(p => p.Books)
                 .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK__Book__category_i__52593CB8");
+                .HasConstraintName("FK__Book__category_i__5535A963");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Books)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Book__user_id__534D60F1");
+            entity.HasOne(d => d.Shop).WithMany(p => p.Books)
+                .HasForeignKey(d => d.ShopId)
+                .HasConstraintName("FK__Book__shop_id__5629CD9C");
         });
 
         modelBuilder.Entity<BookExchange>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83F1F503F10");
+            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83F21FCDEE5");
 
             entity.ToTable("BookExchange");
 
@@ -124,16 +126,16 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
             entity.HasOne(d => d.Category).WithMany(p => p.BookExchanges)
                 .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK__BookExcha__categ__5441852A");
+                .HasConstraintName("FK__BookExcha__categ__571DF1D5");
 
             entity.HasOne(d => d.User).WithMany(p => p.BookExchanges)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__BookExcha__user___5535A963");
+                .HasConstraintName("FK__BookExcha__user___5812160E");
         });
 
         modelBuilder.Entity<BookExchangeDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83F925E4EC8");
+            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83FE3A18542");
 
             entity.ToTable("BookExchangeDetail");
 
@@ -143,12 +145,12 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
             entity.HasOne(d => d.BookExchange).WithMany(p => p.BookExchangeDetails)
                 .HasForeignKey(d => d.BookExchangeId)
-                .HasConstraintName("FK__BookExcha__book___5629CD9C");
+                .HasConstraintName("FK__BookExcha__book___59063A47");
         });
 
         modelBuilder.Entity<BookExchangePost>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83FE4936718");
+            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83FDD87B28F");
 
             entity.ToTable("BookExchangePost");
 
@@ -162,12 +164,12 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
             entity.HasOne(d => d.BookExchange).WithMany(p => p.BookExchangePosts)
                 .HasForeignKey(d => d.BookExchangeId)
-                .HasConstraintName("FK__BookExcha__book___571DF1D5");
+                .HasConstraintName("FK__BookExcha__book___59FA5E80");
         });
 
         modelBuilder.Entity<BookExchangeRequest>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83F02360B6A");
+            entity.HasKey(e => e.Id).HasName("PK__BookExch__3213E83FCFB1652A");
 
             entity.ToTable("BookExchangeRequest");
 
@@ -182,16 +184,16 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
             entity.HasOne(d => d.ChooseBookExchangeDetail).WithMany(p => p.BookExchangeRequestChooseBookExchangeDetails)
                 .HasForeignKey(d => d.ChooseBookExchangeDetailId)
-                .HasConstraintName("FK__BookExcha__choos__59063A47");
+                .HasConstraintName("FK__BookExcha__choos__5BE2A6F2");
 
             entity.HasOne(d => d.PostBookExchangeDetail).WithMany(p => p.BookExchangeRequestPostBookExchangeDetails)
                 .HasForeignKey(d => d.PostBookExchangeDetailId)
-                .HasConstraintName("FK__BookExcha__post___5812160E");
+                .HasConstraintName("FK__BookExcha__post___5AEE82B9");
         });
 
         modelBuilder.Entity<BookReview>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__BookRevi__3213E83FAEAFEB3F");
+            entity.HasKey(e => e.Id).HasName("PK__BookRevi__3213E83FA0FC67DD");
 
             entity.ToTable("BookReview");
 
@@ -206,16 +208,16 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
             entity.HasOne(d => d.Book).WithMany(p => p.BookReviews)
                 .HasForeignKey(d => d.BookId)
-                .HasConstraintName("FK__BookRevie__book___68487DD7");
+                .HasConstraintName("FK__BookRevie__book___6B24EA82");
 
             entity.HasOne(d => d.User).WithMany(p => p.BookReviews)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__BookRevie__user___6754599E");
+                .HasConstraintName("FK__BookRevie__user___6A30C649");
         });
 
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Cart__3213E83FC8D5D7A7");
+            entity.HasKey(e => e.Id).HasName("PK__Cart__3213E83FED41CEE7");
 
             entity.ToTable("Cart");
 
@@ -224,12 +226,12 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
             entity.HasOne(d => d.User).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Cart__user_id__6477ECF3");
+                .HasConstraintName("FK__Cart__user_id__6754599E");
         });
 
         modelBuilder.Entity<CartItem>(entity =>
         {
-            entity.HasKey(e => new { e.CartId, e.BookId }).HasName("PK__CartItem__2A65FB89E53F370D");
+            entity.HasKey(e => new { e.CartId, e.BookId }).HasName("PK__CartItem__2A65FB89D44557BA");
 
             entity.ToTable("CartItem");
 
@@ -240,17 +242,17 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
             entity.HasOne(d => d.Book).WithMany(p => p.CartItems)
                 .HasForeignKey(d => d.BookId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CartItem__book_i__66603565");
+                .HasConstraintName("FK__CartItem__book_i__693CA210");
 
             entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
                 .HasForeignKey(d => d.CartId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CartItem__cart_i__656C112C");
+                .HasConstraintName("FK__CartItem__cart_i__68487DD7");
         });
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Category__3213E83FDEF7EC2E");
+            entity.HasKey(e => e.Id).HasName("PK__Category__3213E83F3BB522DB");
 
             entity.ToTable("Category");
 
@@ -262,7 +264,7 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Order__3213E83F3619A21D");
+            entity.HasKey(e => e.Id).HasName("PK__Order__3213E83F94618B5A");
 
             entity.ToTable("Order");
 
@@ -270,28 +272,28 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
             entity.Property(e => e.BuyerId).HasColumnName("buyer_id");
             entity.Property(e => e.OrderDate).HasColumnName("order_date");
             entity.Property(e => e.PaymentId).HasColumnName("payment_id");
-            entity.Property(e => e.SellerId).HasColumnName("seller_id");
+            entity.Property(e => e.ShopId).HasColumnName("shop_id");
             entity.Property(e => e.Status).HasColumnName("status");
             entity.Property(e => e.Total)
                 .HasColumnType("decimal(19, 4)")
                 .HasColumnName("total");
 
-            entity.HasOne(d => d.Buyer).WithMany(p => p.OrderBuyers)
+            entity.HasOne(d => d.Buyer).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.BuyerId)
-                .HasConstraintName("FK__Order__buyer_id__5FB337D6");
+                .HasConstraintName("FK__Order__buyer_id__628FA481");
 
             entity.HasOne(d => d.Payment).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.PaymentId)
-                .HasConstraintName("FK__Order__payment_i__619B8048");
+                .HasConstraintName("FK__Order__payment_i__6477ECF3");
 
-            entity.HasOne(d => d.Seller).WithMany(p => p.OrderSellers)
-                .HasForeignKey(d => d.SellerId)
-                .HasConstraintName("FK__Order__seller_id__60A75C0F");
+            entity.HasOne(d => d.Shop).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.ShopId)
+                .HasConstraintName("FK__Order__shop_id__6383C8BA");
         });
 
         modelBuilder.Entity<OrderBookExchange>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__OrderBoo__3213E83FAE4F55CF");
+            entity.HasKey(e => e.Id).HasName("PK__OrderBoo__3213E83FB3018957");
 
             entity.ToTable("OrderBookExchange");
 
@@ -306,24 +308,24 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
 
             entity.HasOne(d => d.ChooseBookExchange).WithMany(p => p.OrderBookExchangeChooseBookExchanges)
                 .HasForeignKey(d => d.ChooseBookExchangeId)
-                .HasConstraintName("FK__OrderBook__choos__5CD6CB2B");
+                .HasConstraintName("FK__OrderBook__choos__5FB337D6");
 
             entity.HasOne(d => d.ChooseUser).WithMany(p => p.OrderBookExchangeChooseUsers)
                 .HasForeignKey(d => d.ChooseUserId)
-                .HasConstraintName("FK__OrderBook__choos__5BE2A6F2");
+                .HasConstraintName("FK__OrderBook__choos__5EBF139D");
 
             entity.HasOne(d => d.PostBookExchange).WithMany(p => p.OrderBookExchangePostBookExchanges)
                 .HasForeignKey(d => d.PostBookExchangeId)
-                .HasConstraintName("FK__OrderBook__post___5AEE82B9");
+                .HasConstraintName("FK__OrderBook__post___5DCAEF64");
 
             entity.HasOne(d => d.PostUser).WithMany(p => p.OrderBookExchangePostUsers)
                 .HasForeignKey(d => d.PostUserId)
-                .HasConstraintName("FK__OrderBook__post___59FA5E80");
+                .HasConstraintName("FK__OrderBook__post___5CD6CB2B");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.HasKey(e => new { e.OrderId, e.BookId }).HasName("PK__OrderIte__42C9B387060335B3");
+            entity.HasKey(e => new { e.OrderId, e.BookId }).HasName("PK__OrderIte__42C9B387772AC0CA");
 
             entity.ToTable("OrderItem");
 
@@ -334,17 +336,17 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
             entity.HasOne(d => d.Book).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.BookId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderItem__book___6383C8BA");
+                .HasConstraintName("FK__OrderItem__book___66603565");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderItem__order__628FA481");
+                .HasConstraintName("FK__OrderItem__order__656C112C");
         });
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Payment__3213E83FE7962D47");
+            entity.HasKey(e => e.Id).HasName("PK__Payment__3213E83FAED2F32F");
 
             entity.ToTable("Payment");
 
@@ -355,9 +357,34 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
                 .HasColumnName("total");
         });
 
+        modelBuilder.Entity<Shop>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Shop__3213E83FC86367AC");
+
+            entity.ToTable("Shop");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.BannerUrl)
+                .HasMaxLength(255)
+                .HasColumnName("banner_url");
+            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.Description)
+                .HasColumnType("text")
+                .HasColumnName("description");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .HasColumnName("name");
+            entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Shops)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__Shop__user_id__5441852A");
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3213E83F6EE28B0D");
+            entity.HasKey(e => e.Id).HasName("PK__User__3213E83F12CD2CA6");
 
             entity.ToTable("User");
 
@@ -372,20 +399,20 @@ public partial class ApplicationDbContext : IdentityDbContext<User, IdentityRole
                 .HasMaxLength(50)
                 .HasColumnName("full_name");
 
-            entity.HasMany(d => d.BooksNavigation).WithMany(p => p.Users)
+            entity.HasMany(d => d.Books).WithMany(p => p.Users)
                 .UsingEntity<Dictionary<string, object>>(
                     "FavoriteBook",
                     r => r.HasOne<Book>().WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__FavoriteB__book___5EBF139D"),
+                        .HasConstraintName("FK__FavoriteB__book___619B8048"),
                     l => l.HasOne<User>().WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__FavoriteB__user___5DCAEF64"),
+                        .HasConstraintName("FK__FavoriteB__user___60A75C0F"),
                     j =>
                     {
-                        j.HasKey("UserId", "BookId").HasName("PK__Favorite__BD2EE6A1361B3010");
+                        j.HasKey("UserId", "BookId").HasName("PK__Favorite__BD2EE6A1C5E71E21");
                         j.ToTable("FavoriteBook");
                         j.IndexerProperty<int>("UserId").HasColumnName("user_id");
                         j.IndexerProperty<int>("BookId").HasColumnName("book_id");
