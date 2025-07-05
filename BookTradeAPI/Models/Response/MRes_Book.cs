@@ -34,7 +34,7 @@ namespace BookTradeAPI.Models.Response
 
         public int? CategoryId { get; set; }
 
-        public int? UserId { get; set; }
+        public int? ShopId { get; set; }
 
         public virtual ICollection<BookReview> BookReviews { get; set; } = new List<BookReview>();
 
@@ -44,7 +44,7 @@ namespace BookTradeAPI.Models.Response
 
         public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
-        public virtual User? User { get; set; }
+        public virtual Shop? Shop { get; set; }
 
         public virtual ICollection<User> Users { get; set; } = new List<User>();
     }

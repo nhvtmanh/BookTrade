@@ -2,7 +2,6 @@
 using BookTradeAPI.Models.Entities;
 using BookTradeAPI.Models.Request;
 using BookTradeAPI.Models.Response;
-using static BookTradeAPI.Models.Request.MReq_User;
 
 namespace BookTradeAPI.Libs.Mapper
 {
@@ -25,6 +24,9 @@ namespace BookTradeAPI.Libs.Mapper
             CreateMap<MReq_User_Register, User>().ReverseMap();
             CreateMap<MReq_User_Login, User>().ReverseMap();
             CreateMap<MRes_User, User>().ReverseMap();
+
+            CreateMap<MReq_Seller_Register, Shop>().ReverseMap();
+            CreateMap<MRes_Shop, Shop>().ReverseMap();
         }
     }
 }

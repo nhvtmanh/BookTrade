@@ -1,6 +1,4 @@
-﻿using BookTradeAPI.Models.Entities;
-
-namespace BookTradeAPI.Models.Response
+﻿namespace BookTradeAPI.Models.Response
 {
     public class MRes_User
     {

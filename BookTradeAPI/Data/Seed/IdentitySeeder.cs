@@ -35,7 +35,8 @@ namespace BookTradeAPI.Data.Seed
                     Address = address,
                     Email = adminEmail,
                     UserName = adminEmail,
-                    PhoneNumber = phoneNumber
+                    PhoneNumber = phoneNumber,
+                    AvatarUrl = "images/avatar.png"
                 };
                 string password = "Admin123@";
                 var result = await userManager.CreateAsync(admin, password);
@@ -56,7 +57,8 @@ namespace BookTradeAPI.Data.Seed
                     Address = address,
                     Email = sellerEmail,
                     UserName = sellerEmail,
-                    PhoneNumber = phoneNumber
+                    PhoneNumber = phoneNumber,
+                    AvatarUrl = "images/avatar.png"
                 };
                 string password = "Seller123@";
                 var result = await userManager.CreateAsync(seller, password);
@@ -77,7 +79,8 @@ namespace BookTradeAPI.Data.Seed
                     Address = address,
                     Email = memberEmail,
                     UserName = memberEmail,
-                    PhoneNumber = phoneNumber
+                    PhoneNumber = phoneNumber,
+                    AvatarUrl = "images/avatar.png"
                 };
                 string password = "Member123@";
                 var result = await userManager.CreateAsync(member, password);

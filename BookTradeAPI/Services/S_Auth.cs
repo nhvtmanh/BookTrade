@@ -1,20 +1,23 @@
 ﻿using AutoMapper;
+using BookTradeAPI.Data;
 using BookTradeAPI.Models.Common;
 using BookTradeAPI.Models.Entities;
+using BookTradeAPI.Models.Request;
 using BookTradeAPI.Models.Response;
 using BookTradeAPI.Utilities.Constants;
+using BookTradeAPI.Utilities.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static BookTradeAPI.Models.Request.MReq_User;
 
 namespace BookTradeAPI.Services
 {
     public interface IS_Auth
     {
         Task<ApiResponse<MRes_User>> Register(MReq_User_Register request);
+        Task<ApiResponse<MRes_Shop>> RegisterSeller(MReq_Seller_Register request);
         Task<ApiResponse<string>> Login(MReq_User_Login request);
     }
     public class S_Auth : IS_Auth
@@ -22,12 +25,14 @@ namespace BookTradeAPI.Services
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly ApplicationDbContext _dbContext;
 
-        public S_Auth(UserManager<User> userManager, IMapper mapper, IConfiguration configuration)
+        public S_Auth(UserManager<User> userManager, IMapper mapper, IConfiguration configuration, ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _mapper = mapper;
             _configuration = configuration;
+            _dbContext = dbContext;
         }
 
         public async Task<ApiResponse<MRes_User>> Register(MReq_User_Register request)
@@ -44,6 +49,7 @@ namespace BookTradeAPI.Services
 
             var data = _mapper.Map<User>(request);
             data.UserName = request.Email;
+            data.AvatarUrl = "images/avatar.png";
 
             var result = await _userManager.CreateAsync(data, request.Password);
             if (!result.Succeeded)
@@ -59,6 +65,52 @@ namespace BookTradeAPI.Services
             response.StatusCode = StatusCodes.Status201Created;
             response.Data = _mapper.Map<MRes_User>(data);
             response.Message = ["Đăng ký thành công"];
+            return response;
+        }
+
+        public async Task<ApiResponse<MRes_Shop>> RegisterSeller(MReq_Seller_Register request)
+        {
+            var response = new ApiResponse<MRes_Shop>();
+
+            var user = await _userManager.FindByEmailAsync(request.User.Email);
+            if (user != null)
+            {
+                response.StatusCode = StatusCodes.Status400BadRequest;
+                response.Message = ["Email đã được sử dụng"];
+                return response;
+            }
+
+            var userData = _mapper.Map<User>(request.User);
+            userData.UserName = request.User.Email;
+            userData.AvatarUrl = "images/avatar.png";
+
+            var result = await _userManager.CreateAsync(userData, request.User.Password);
+            if (!result.Succeeded)
+            {
+                response.StatusCode = StatusCodes.Status400BadRequest;
+                response.Message = result.Errors.Select(e => e.Description).ToList();
+                return response;
+            }
+
+            // Assign "Seller" role
+            await _userManager.AddToRoleAsync(userData, UserRoleConstant.SELLER);
+
+            var shop = new Shop
+            {
+                Name = request.Name,
+                Description = request.Description,
+                BannerUrl = request.BannerUrl,
+                Status = (byte)EN_Shop.Status.Pending,
+                CreatedAt = DateTime.Now,
+                UserId = userData.Id
+            };
+
+            _dbContext.Shops.Add(shop);
+            await _dbContext.SaveChangesAsync();
+
+            response.StatusCode = StatusCodes.Status201Created;
+            response.Data = _mapper.Map<MRes_Shop>(shop);
+            response.Message = ["Đăng ký thành công. Vui lòng chờ xác nhận"];
             return response;
         }
 
