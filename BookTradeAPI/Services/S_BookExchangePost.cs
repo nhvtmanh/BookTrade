@@ -26,8 +26,8 @@ namespace BookTradeAPI.Services
             var response = new ApiResponse<List<MRes_BookExchangePost>>();
 
             var data = await _dbContext.BookExchangePosts
-                .Include(x => x.BookExchange)
                 .AsNoTracking()
+                .Include(x => x.BookExchange)
                 .ToListAsync();
 
             response.StatusCode = StatusCodes.Status200OK;

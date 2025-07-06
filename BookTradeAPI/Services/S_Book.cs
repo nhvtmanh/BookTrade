@@ -35,6 +35,7 @@ namespace BookTradeAPI.Services
 
             var data = await _dbContext.Books
                 .AsNoTracking()
+                .Include(x => x.Shop)
                 .ToListAsync();
 
             response.StatusCode = StatusCodes.Status200OK;
@@ -66,6 +67,11 @@ namespace BookTradeAPI.Services
             var data = _mapper.Map<Book>(request);
             data.Status = (byte)EN_Book.Status.Available;
             data.CreatedAt = DateTime.Now;
+
+            var shop = await _dbContext.Shops
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.UserId == request.UserId);
+            data.ShopId = shop!.Id;
 
             _dbContext.Books.Add(data);
             await _dbContext.SaveChangesAsync();
