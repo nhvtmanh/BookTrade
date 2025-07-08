@@ -13,6 +13,8 @@ public partial class Order
 
     public decimal Total { get; set; }
 
+    public string Address { get; set; } = null!;
+
     public int? BuyerId { get; set; }
 
     public int? ShopId { get; set; }

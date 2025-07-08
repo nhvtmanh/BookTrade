@@ -11,5 +11,9 @@ public partial class Payment
 
     public decimal Total { get; set; }
 
+    public byte PaymentMethod { get; set; }
+
+    public byte Status { get; set; }
+
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }
