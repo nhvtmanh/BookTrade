@@ -7,12 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\controller\**" />
+    <Content Remove="wwwroot\controller\**" />
+    <EmbeddedResource Remove="wwwroot\controller\**" />
+    <None Remove="wwwroot\controller\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.12.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BookTradeAPI\BookTradeAPI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\" />
+    <Folder Include="Areas\Seller\" />
   </ItemGroup>
 
 </Project>

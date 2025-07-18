@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /BookTradeAPI/appsettings.json
 /BookTradeWebApp/appsettings.json
+/BookTradeWebApp/wwwroot/images/uploads

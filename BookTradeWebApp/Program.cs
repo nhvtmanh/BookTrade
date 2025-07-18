@@ -21,6 +21,8 @@ builder.Services.AddScoped<IS_Auth, S_Auth>();
 builder.Services.AddScoped<IS_BookExchange, S_BookExchange>();
 builder.Services.AddScoped<IS_File, S_File>();
 builder.Services.AddScoped<IS_Category, S_Category>();
+builder.Services.AddScoped<IS_Book, S_Book>();
+builder.Services.AddScoped<IS_Cart, S_Cart>();
 
 var app = builder.Build();
 
@@ -39,8 +41,24 @@ app.UseSession();
 app.UseRouting();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Auth}/{action=Login}/{id?}");
+    name: "Login",
+    pattern: "login",
+    defaults: new { controller = "Auth", action = "Login" });
+
+app.MapControllerRoute(
+#region Member
+app.MapAreaControllerRoute(
+    name: "Shop",
+    areaName: "Member",
+    pattern: "member/shop",
+    defaults: new { controller = "Shop", action = "Index" });
+
+app.MapAreaControllerRoute(
+    name: "MemberDefault",
+    areaName: "Member",
+    pattern: "{area}/{controller}/{action}/{id?}");
+#endregion
+
 app.MapControllerRoute(
     name: "BookExchange",
     pattern: "book-exchange",

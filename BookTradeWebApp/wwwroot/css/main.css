@@ -1952,7 +1952,8 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .table-shopping-cart .table_row td {
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .table-shopping-cart .table_row td.column-1 {
@@ -2123,7 +2124,7 @@ input.num-product::-webkit-inner-spin-button {
 ==================================================================*/
 .cl0 {color: #fff;}
 .cl1 {color: #717fe0;}
-.cl2 {color: #333;}
+.cl2 {color: #333 !important;}
 .cl3 {color: #666;}
 .cl4 {color: #999;}
 .cl5 {color: #222;}
@@ -3079,7 +3080,8 @@ input.num-product::-webkit-inner-spin-button {
 .hov-btn1:hover {
   border-color: #222;
   background-color: #222;
-  color: #fff;
+  color: #fff !important;
+  cursor: pointer;
 }
 
 .hov-btn1:hover i {

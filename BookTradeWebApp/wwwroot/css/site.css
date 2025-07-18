@@ -8,7 +8,7 @@ html {
     }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -24,4 +24,10 @@ body {
 .dropdown-item.active, .dropdown-item:active {
     background-color: #f8f9fa !important;
     color: inherit !important;
+}
+
+.input-checkbox {
+    accent-color: #717fe0;
+    width: 20px;
+    height: 20px;
 }
