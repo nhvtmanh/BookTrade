@@ -4,26 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BookTrade</title>
-    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+    <link rel="icon" type="image/png" href="/images/icons/favicon.png" />
 
     @* <link rel="stylesheet" href="~/BookTradeWebApp.styles.css" asp-append-version="true" /> *@
-    <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="fonts/iconic/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" href="/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="/fonts/linearicons-v1.0.0/icon-font.min.css">
     @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
-    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="vendor/animate/animate.css">
-    <link rel="stylesheet" href="vendor/css-hamburgers/hamburgers.min.css">
-    <link rel="stylesheet" href="vendor/animsition/css/animsition.min.css">
-    <link rel="stylesheet" href="vendor/select2/select2.min.css">
-    <link rel="stylesheet" href="vendor/daterangepicker/daterangepicker.css">
-    <link rel="stylesheet" href="vendor/slick/slick.css">
-    <link rel="stylesheet" href="vendor/MagnificPopup/magnific-popup.css">
-    <link rel="stylesheet" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="css/sb-admin-2.min.css">
-    <link rel="stylesheet" href="css/util.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/vendor/animate/animate.css">
+    <link rel="stylesheet" href="/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" href="/vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" href="/vendor/select2/select2.min.css">
+    <link rel="stylesheet" href="/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="/vendor/slick/slick.css">
+    <link rel="stylesheet" href="/vendor/MagnificPopup/magnific-popup.css">
+    <link rel="stylesheet" href="/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/css/sb-admin-2.min.css">
+    <link rel="stylesheet" href="/css/util.css">
+    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body class="animsition">
@@ -35,25 +35,25 @@
                 <nav class="limiter-menu-desktop container">
                     <!-- Logo desktop -->
                     <a href="#" class="logo">
-                        <img src="images/icons/logo.png" alt="IMG-LOGO">
+                        <img src="/images/icons/logo.png" alt="IMG-LOGO">
                     </a>
 
                     <!-- Menu desktop -->
                     <div class="menu-desktop">
                         <ul class="main-menu">
                             <li>
-                                <a href="/home">Home</a>
+                                <a href="#">Home</a>
                             </li>
 
-                            <li>
-                                <a href="/shop">Shop</a>
+                            <li class="@(ViewData["ActiveMenu"]?.ToString() == "Shop" ? "active-menu" : "")">
+                                <a href="/member/shop">Shop</a>
                             </li>
 
-                            <li class="active-menu">
+                            <li class="@(ViewData["ActiveMenu"]?.ToString() == "BookExchange" ? "active-menu" : "")">
                                 <a href="/book-exchange">Exchange</a>
                             </li>
 
-                            <li>
+                            <li class="@(ViewData["ActiveMenu"]?.ToString() == "Book" ? "active-menu" : "")">
                                 <a href="/book">Book</a>
                             </li>
                         </ul>
@@ -61,7 +61,7 @@
 
                     <!-- Icon header -->
                     <div class="wrap-icon-header flex-w flex-r-m">
-                        <a href="/cart" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
+                        <a href="/member/cart" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
                             <i class="zmdi zmdi-shopping-cart"></i>
                         </a>
 
@@ -73,7 +73,7 @@
                                 </h6>
                                 <a href="#" class="dropdown-item d-flex justify-content-center align-items-center">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" style="width: 2.5rem; height: 2.5rem;" src="images/avatar.png" alt="IMG-AVATAR">
+                                        <img class="rounded-circle" style="width: 2.5rem; height: 2.5rem;" src="/images/avatar.png" alt="IMG-AVATAR">
                                     </div>
                                     <div>
                                         <div class="font-weight-bold" style="text-wrap: wrap;">
@@ -92,7 +92,7 @@
                                 </a>
                                 <a href="#" class="dropdown-item d-flex justify-content-center align-items-center">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" style="width: 2.5rem; height: 2.5rem;" src="images/avatar.png" alt="IMG-AVATAR">
+                                        <img class="rounded-circle" style="width: 2.5rem; height: 2.5rem;" src="/images/avatar.png" alt="IMG-AVATAR">
                                     </div>
                                     <div>
                                         <div class="font-weight-bold" style="text-wrap: wrap;">
@@ -111,7 +111,7 @@
                                 </a>
                                 <a href="#" class="dropdown-item d-flex justify-content-center align-items-center">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" style="width: 2.5rem; height: 2.5rem;" src="images/avatar.png" alt="IMG-AVATAR">
+                                        <img class="rounded-circle" style="width: 2.5rem; height: 2.5rem;" src="/images/avatar.png" alt="IMG-AVATAR">
                                     </div>
                                     <div>
                                         <div class="font-weight-bold" style="text-wrap: wrap;">
@@ -281,23 +281,23 @@
             <div class="p-t-40">
                 <div class="flex-c-m flex-w p-b-18">
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-01.png" alt="ICON-PAY">
+                        <img src="/images/icons/icon-pay-01.png" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-02.png" alt="ICON-PAY">
+                        <img src="/images/icons/icon-pay-02.png" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-03.png" alt="ICON-PAY">
+                        <img src="/images/icons/icon-pay-03.png" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-04.png" alt="ICON-PAY">
+                        <img src="/images/icons/icon-pay-04.png" alt="ICON-PAY">
                     </a>
 
                     <a href="#" class="m-all-1">
-                        <img src="images/icons/icon-pay-05.png" alt="ICON-PAY">
+                        <img src="/images/icons/icon-pay-05.png" alt="ICON-PAY">
                     </a>
                 </div>
 
@@ -315,27 +315,27 @@
         </span>
     </div>
 
-    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-    <script src="vendor/animsition/js/animsition.min.js"></script>
-    <script src="vendor/bootstrap/js/popper.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/select2/select2.min.js"></script>
-    <script src="vendor/daterangepicker/moment.min.js"></script>
-    <script src="vendor/daterangepicker/daterangepicker.js"></script>
-    <script src="vendor/slick/slick.min.js"></script>
-    <script src="vendor/parallax100/parallax100.js"></script>
-    <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
-    <script src="vendor/isotope/isotope.pkgd.min.js"></script>
-    <script src="vendor/sweetalert/sweetalert.min.js"></script>
-    <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="/vendor/animsition/js/animsition.min.js"></script>
+    <script src="/vendor/bootstrap/js/popper.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/vendor/select2/select2.min.js"></script>
+    <script src="/vendor/daterangepicker/moment.min.js"></script>
+    <script src="/vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="/vendor/slick/slick.min.js"></script>
+    <script src="/vendor/parallax100/parallax100.js"></script>
+    <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+    <script src="/vendor/isotope/isotope.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.2/dist/sweetalert2.all.min.js"></script>
+    <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
     @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
-    <script src="js/main.js"></script>
-    <script src="js/slick-custom.js"></script>
-    <script src="js/notification.js"></script>
-    <script src="js/site.js" asp-append-version="true"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/slick-custom.js"></script>
+    @* <script src="js/notification.js"></script> *@
+    <script src="/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

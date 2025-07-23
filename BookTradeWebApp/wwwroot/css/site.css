@@ -31,3 +31,11 @@ body {
     width: 20px;
     height: 20px;
 }
+
+.floating-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+}

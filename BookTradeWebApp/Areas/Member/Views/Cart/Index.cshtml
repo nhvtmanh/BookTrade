@@ -1,0 +1,99 @@
+﻿@section Scripts {
+	<partial name="_ValidationScriptsPartial"></partial>
+	<script src="/controllers/Member/cart.js" asp-append-version="true"></script>
+}
+
+<!-- Shoping Cart -->
+<form class="bg0 p-t-150 p-b-85">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-8 col-lg-10 m-lr-auto m-b-50 px-0">
+				<div class="m-lr-0-xl">
+					<div class="wrap-table-shopping-cart">
+						<table id="cartTable" class="table-shopping-cart" style="table-layout: fixed;">
+							<tr class="table_head text-center">
+								<th class="px-2" style="width: 5%;">
+									<div class="form-check">
+										<input id="inputCheckAll" class="form-check-input input-checkbox" type="checkbox" />
+									</div>
+								</th>
+								<th class="text-left" style="width: 45%;">Book</th>
+								<th style="width: 15%;">Price</th>
+								<th style="width: 20%;">Quantity</th>
+								<th style="width: 15%;">Total</th>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xl-4 col-lg-7 col-sm-10 m-lr-auto m-b-50 px-0">
+				<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-50 m-lr-0-xl p-lr-15-sm">
+					<h4 class="mtext-109 cl2">
+						Cart Totals
+					</h4>
+
+					<div class="flex-w flex-t pt-4">
+						<div class="w-100">
+							<span class="stext-110 cl2">
+								Shipping address
+							</span>
+							<div class="bor8 mt-2">
+								<textarea class="stext-111 cl2 plh3 px-4 py-3 w-100" name="msg" placeholder="Shipping address"></textarea>
+							</div>
+						</div>
+					</div>
+
+					<div class="flex-w flex-t pt-3">
+						<div class="w-100">
+							<span class="stext-110 cl2">
+								Voucher code
+							</span>
+							<input class="stext-104 cl2 plh4 size-117 w-100 bor13 px-4 mt-2" type="text" name="coupon" placeholder="Voucher code">
+						</div>
+					</div>
+
+					<div class="flex-w flex-t bor12 pt-3 p-b-30">
+						<div class="w-100">
+							<span class="stext-110 cl2">
+								Payment method
+							</span>
+							<div class="respon6-next mt-2">
+								<div class="rs1-select2 bor8 bg0">
+									<select class="js-select2">
+										<option>Choose payment method</option>
+										<option>COD</option>
+										<option>Online</option>
+									</select>
+									<div class="dropDownSelect2"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="d-flex align-items-center justify-content-around p-t-25 p-b-30">
+						<div>
+							<span class="mtext-101 cl2">
+								Total:
+							</span>
+						</div>
+
+						<div>
+							<span class="mtext-109" style="color: #e74a3b" id="cartTotal">
+								0 VND
+							</span>
+						</div>
+					</div>
+
+					<button type="button" onclick="PlaceOrder()" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+						Place Order
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button type="button" id="btnDelete" class="floating-btn btn btn-danger rounded text-white stext-101" style="display: none;" onclick="ShowDeleteCartItemsAlert()">
+		<i class="zmdi zmdi-delete" style="margin-right: 2px;"></i>
+		Delete
+	</button>
+</form>

@@ -54,6 +54,12 @@ app.MapAreaControllerRoute(
     defaults: new { controller = "Shop", action = "Index" });
 
 app.MapAreaControllerRoute(
+    name: "Cart",
+    areaName: "Member",
+    pattern: "member/cart",
+    defaults: new { controller = "Cart", action = "Index" });
+
+app.MapAreaControllerRoute(
     name: "MemberDefault",
     areaName: "Member",
     pattern: "{area}/{controller}/{action}/{id?}");
