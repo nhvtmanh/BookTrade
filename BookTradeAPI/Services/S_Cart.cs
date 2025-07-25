@@ -60,7 +60,26 @@ namespace BookTradeAPI.Services
         {
             var response = new ApiResponse<int>();
             response.StatusCode = StatusCodes.Status200OK;
-            response.Message = ["Đã thêm vào giỏ hàng"];
+            response.Message = ["Added to cart"];
+
+            // Check quantity exceeds stock quantity
+            var book = await _dbContext.Books
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == request.BookId);
+            if (book == null)
+            {
+                response.StatusCode = StatusCodes.Status404NotFound;
+                response.Message = [MessageErrorConstant.NOT_FOUND];
+                return response;
+            }
+
+            int quantity = request.Quantity;
+            if (quantity >= book.StockQuantity)
+            {
+                response.StatusCode = StatusCodes.Status400BadRequest;
+                response.Message = [MessageErrorConstant.QUANTITY_EXCEED_STOCK];
+                return response;
+            }
 
             // Check customer has a cart
             int userId = request.UserId;

@@ -145,7 +145,7 @@ namespace BookTradeAPI.Services
             if (data.ExchangeableQuantity > 0)
             {
                 response.StatusCode = StatusCodes.Status400BadRequest;
-                response.Message = ["Không thể xóa vì đã tồn tại sách để trao đổi"];
+                response.Message = ["Cannot delete because there are books already linked for exchange"];
                 return response;
             }
 
@@ -177,7 +177,7 @@ namespace BookTradeAPI.Services
             if (request.ExchangeableQuantity > bookExchange.CreatedQuantity)
             {
                 response.StatusCode = StatusCodes.Status400BadRequest;
-                response.Message = ["Số lượng trao đổi không được vượt quá số lượng sách"];
+                response.Message = ["You cannot exchange more than the available number of books"];
                 return response;
             }
 

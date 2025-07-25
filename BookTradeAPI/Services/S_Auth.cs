@@ -43,7 +43,7 @@ namespace BookTradeAPI.Services
             if (user != null)
             {
                 response.StatusCode = StatusCodes.Status400BadRequest;
-                response.Message = ["Email đã được sử dụng"];
+                response.Message = [MessageErrorConstant.EMAIL_ALREADY_EXISTS];
                 return response;
             }
 
@@ -64,7 +64,7 @@ namespace BookTradeAPI.Services
 
             response.StatusCode = StatusCodes.Status201Created;
             response.Data = _mapper.Map<MRes_User>(data);
-            response.Message = ["Đăng ký thành công"];
+            response.Message = ["You have successfully registered"];
             return response;
         }
 
@@ -76,7 +76,7 @@ namespace BookTradeAPI.Services
             if (user != null)
             {
                 response.StatusCode = StatusCodes.Status400BadRequest;
-                response.Message = ["Email đã được sử dụng"];
+                response.Message = [MessageErrorConstant.EMAIL_ALREADY_EXISTS];
                 return response;
             }
 
@@ -110,7 +110,7 @@ namespace BookTradeAPI.Services
 
             response.StatusCode = StatusCodes.Status201Created;
             response.Data = _mapper.Map<MRes_Shop>(shop);
-            response.Message = ["Đăng ký thành công. Vui lòng chờ xác nhận"];
+            response.Message = ["You have successfully registered. Please wait for confirmation"];
             return response;
         }
 
@@ -122,7 +122,7 @@ namespace BookTradeAPI.Services
             if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
             {
                 response.StatusCode = StatusCodes.Status400BadRequest;
-                response.Message = ["Email hoặc mật khẩu không đúng"];
+                response.Message = ["Incorrect email or password"];
                 return response;
             }
 
@@ -147,7 +147,7 @@ namespace BookTradeAPI.Services
 
             response.StatusCode = StatusCodes.Status200OK;
             response.Data = new JwtSecurityTokenHandler().WriteToken(token);
-            response.Message = ["Đăng nhập thành công"];
+            response.Message = ["You have successfully logged in"];
             return response;
         }
     }
