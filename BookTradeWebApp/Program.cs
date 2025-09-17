@@ -1,5 +1,6 @@
 using BookTradeWebApp.Extensions;
 using BookTradeWebApp.Services;
+using VNPAY.NET;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ builder.Services.AddScoped<IS_File, S_File>();
 builder.Services.AddScoped<IS_Category, S_Category>();
 builder.Services.AddScoped<IS_Book, S_Book>();
 builder.Services.AddScoped<IS_Cart, S_Cart>();
+
+builder.Services.AddSingleton<IVnpay, Vnpay>();
 
 var app = builder.Build();
 

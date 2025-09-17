@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Text;
+using VNPAY.NET;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -88,6 +89,9 @@ builder.Services.AddScoped<IS_BookExchange, S_BookExchange>();
 builder.Services.AddScoped<IS_Category, S_Category>();
 builder.Services.AddScoped<IS_BookExchangePost, S_BookExchangePost>();
 builder.Services.AddScoped<IS_Cart, S_Cart>();
+builder.Services.AddScoped<IS_Payment, S_Payment>();
+
+builder.Services.AddSingleton<IVnpay, Vnpay>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
