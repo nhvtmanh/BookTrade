@@ -4,6 +4,7 @@ using BookTradeAPI.Services;
 using BookTradeAPI.Utilities.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Security.Claims;
 using VNPAY.NET;
 using VNPAY.NET.Enums;
@@ -47,11 +48,15 @@ namespace BookTradeAPI.Controllers
                 }
                 double money = getCartTotalResponse.Data;
 
+                var data = JsonConvert.DeserializeObject<MReq_Payment_Description>(request.Description);
+                data!.UserId = request.UserId;
+                string description = JsonConvert.SerializeObject(data);
+
                 var paymentRequest = new PaymentRequest
                 {
                     PaymentId = DateTime.Now.Ticks,
                     Money = money,
-                    Description = request.Description,
+                    Description = description,
                     IpAddress = ipAddress,
                     BankCode = BankCode.ANY, // Tùy chọn. Mặc định là tất cả phương thức giao dịch
                     CreatedDate = DateTime.Now, // Tùy chọn. Mặc định là thời điểm hiện tại

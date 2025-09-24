@@ -89,6 +89,7 @@ builder.Services.AddScoped<IS_BookExchange, S_BookExchange>();
 builder.Services.AddScoped<IS_Category, S_Category>();
 builder.Services.AddScoped<IS_BookExchangePost, S_BookExchangePost>();
 builder.Services.AddScoped<IS_Cart, S_Cart>();
+builder.Services.AddScoped<IS_Order, S_Order>();
 builder.Services.AddScoped<IS_Payment, S_Payment>();
 
 builder.Services.AddSingleton<IVnpay, Vnpay>();

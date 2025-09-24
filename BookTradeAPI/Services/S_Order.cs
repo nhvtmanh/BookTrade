@@ -5,31 +5,27 @@ using BookTradeAPI.Models.Request;
 using BookTradeAPI.Utilities.Constants;
 using BookTradeAPI.Utilities.Enums;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using VNPAY.NET.Models;
 
 namespace BookTradeAPI.Services
 {
-    public interface IS_Payment
+    public interface IS_Order
     {
-        Task<ApiResponse<double>> GetCartTotal(MReq_Payment request);
-        Task HandleSuccessPayment(PaymentResult paymentResult);
-        Task HandleFailedPayment(PaymentResult paymentResult);
+        Task<ApiResponse<bool>> CheckStockQuantity(MReq_CheckStockQuantity request);
+        Task<ApiResponse<int>> PlaceOrder(MReq_PlaceOrder request);
     }
-    public class S_Payment : IS_Payment
+    public class S_Order : IS_Order
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public S_Payment(ApplicationDbContext dbContext)
+        public S_Order(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<ApiResponse<double>> GetCartTotal(MReq_Payment request)
+        public async Task<ApiResponse<bool>> CheckStockQuantity(MReq_CheckStockQuantity request)
         {
-            var response = new ApiResponse<double>();
-            response.StatusCode = StatusCodes.Status404NotFound;
-            response.Message = [MessageErrorConstant.NOT_FOUND];
+            var response = new ApiResponse<bool>();
+            response.StatusCode = StatusCodes.Status200OK;
 
             int userId = request.UserId;
             var cart = await _dbContext.Carts
@@ -38,42 +34,66 @@ namespace BookTradeAPI.Services
                 .ThenInclude(x => x.Book)
                 .FirstOrDefaultAsync(x => x.UserId == userId);
             if (cart == null)
+            {
+                response.StatusCode = StatusCodes.Status404NotFound;
+                response.Message = [MessageErrorConstant.NOT_FOUND];
                 return response;
+            }
 
             var bookIds = request.BookIds;
-            var checkedCartItems = cart.CartItems
+            var cartItems = cart.CartItems
                 .Where(x => bookIds.Contains(x.BookId))
                 .ToList();
-            if (checkedCartItems == null || checkedCartItems.Count == 0)
+            if (cartItems == null || cartItems.Count == 0)
+            {
+                response.StatusCode = StatusCodes.Status404NotFound;
+                response.Message = [MessageErrorConstant.NOT_FOUND];
                 return response;
+            }
 
-            double total = (double)checkedCartItems.Sum(x => x.Book.DiscountPrice * x.Quantity);
-            response.StatusCode = StatusCodes.Status200OK;
-            response.Data = total;
+            foreach (var item in cartItems)
+            {
+                var book = item.Book;
+                if (item.Quantity >= book.StockQuantity)
+                {
+                    response.Data = false;
+                    response.Message = [MessageErrorConstant.QUANTITY_EXCEED_STOCK];
+                    return response;
+                }
+            }
+
+            response.Data = true;
             return response;
         }
 
-        public async Task HandleSuccessPayment(PaymentResult paymentResult)
+        public async Task<ApiResponse<int>> PlaceOrder(MReq_PlaceOrder request)
         {
-            var description = JsonConvert.DeserializeObject<MReq_Payment_Description>(paymentResult.Description);
-            int userId = description!.UserId;
-            var bookIds = description!.BookIds;
-            var shippingAddress = description.ShippingAddress;
-            if (bookIds == null || bookIds.Count == 0 || string.IsNullOrEmpty(shippingAddress))
-                return;
+            var response = new ApiResponse<int>();
+            response.StatusCode = StatusCodes.Status200OK;
+            response.Message = ["Your order has been successfully placed"];
 
+            int userId = request.UserId;
             var cart = await _dbContext.Carts
                 .Include(x => x.CartItems)
                 .ThenInclude(x => x.Book)
                 .FirstOrDefaultAsync(x => x.UserId == userId);
             if (cart == null)
-                return;
+            {
+                response.StatusCode = StatusCodes.Status404NotFound;
+                response.Message = [MessageErrorConstant.NOT_FOUND];
+                return response;
+            }
 
+            var bookIds = request.BookIds;
             var cartItems = cart.CartItems
                 .Where(x => bookIds.Contains(x.BookId))
                 .ToList();
             if (cartItems == null || cartItems.Count == 0)
-                return;
+            {
+                response.StatusCode = StatusCodes.Status404NotFound;
+                response.Message = [MessageErrorConstant.NOT_FOUND];
+                return response;
+            }
 
             var groupedCartItems = cartItems
                 .GroupBy(x => x.Book.ShopId)
@@ -87,10 +107,10 @@ namespace BookTradeAPI.Services
             var orderDate = DateTime.Now;
             var payment = new Payment
             {
-                PaymentDate = paymentResult.Timestamp,
-                Total = cartItems.Sum(x => x.Book.DiscountPrice * x.Quantity),
-                PaymentMethod = (byte)EN_Payment.PaymentMethod.Online,
-                Status = (byte)EN_Payment.Status.Paid
+                PaymentDate = orderDate,
+                Total = cartItems.Sum(x => x.Quantity * x.Book.DiscountPrice),
+                PaymentMethod = (byte)EN_Payment.PaymentMethod.COD,
+                Status = (byte)EN_Payment.Status.Pending
             };
 
             foreach (var group in groupedCartItems)
@@ -99,8 +119,8 @@ namespace BookTradeAPI.Services
                 {
                     OrderDate = orderDate,
                     Status = (byte)EN_Order.Status.Pending,
-                    Total = group.CartItems.Sum(x => x.Book.DiscountPrice * x.Quantity),
-                    Address = shippingAddress,
+                    Total = group.CartItems.Sum(x => x.Quantity * x.Book.DiscountPrice),
+                    Address = request.Address,
                     BuyerId = userId,
                     ShopId = group.ShopId,
                     Payment = payment,
@@ -127,33 +147,9 @@ namespace BookTradeAPI.Services
                 await transaction.RollbackAsync();
                 throw;
             }
-        }
 
-        public async Task HandleFailedPayment(PaymentResult paymentResult)
-        {
-            var description = JsonConvert.DeserializeObject<MReq_Payment_Description>(paymentResult.Description);
-            var bookIds = description!.BookIds;
-            if (bookIds == null || bookIds.Count == 0)
-                return;
-
-            var cartItems = await _dbContext.CartItems
-                .AsNoTracking()
-                .Where(x => bookIds.Contains(x.BookId))
-                .Include(x => x.Book)
-                .ToListAsync();
-            if (cartItems == null || cartItems.Count == 0)
-                return;
-
-            var payment = new Payment
-            {
-                PaymentDate = paymentResult.Timestamp,
-                Total = cartItems.Sum(x => x.Book.DiscountPrice * x.Quantity),
-                PaymentMethod = (byte)EN_Payment.PaymentMethod.Online,
-                Status = (byte)EN_Payment.Status.Failed
-            };
-
-            _dbContext.Payments.Add(payment);
-            await _dbContext.SaveChangesAsync();
+            response.Data = orders.Count;
+            return response;
         }
     }
 }
