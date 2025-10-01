@@ -24,6 +24,8 @@ builder.Services.AddScoped<IS_File, S_File>();
 builder.Services.AddScoped<IS_Category, S_Category>();
 builder.Services.AddScoped<IS_Book, S_Book>();
 builder.Services.AddScoped<IS_Cart, S_Cart>();
+builder.Services.AddScoped<IS_Order, S_Order>();
+builder.Services.AddScoped<IS_Payment, S_Payment>();
 
 builder.Services.AddSingleton<IVnpay, Vnpay>();
 
@@ -49,6 +51,10 @@ app.MapControllerRoute(
     defaults: new { controller = "Auth", action = "Login" });
 
 app.MapControllerRoute(
+    name: "RegisterSeller",
+    pattern: "register-seller",
+    defaults: new { controller = "Auth", action = "RegisterSeller" });
+
 #region Member
 app.MapAreaControllerRoute(
     name: "Shop",
@@ -76,6 +82,32 @@ app.MapControllerRoute(
     name: "Book",
     pattern: "book",
     defaults: new { controller = "Book", action = "Index" });
+
+app.MapControllerRoute(
+    name: "AdminDashboard",
+    pattern: "admin/dashboard",
+    defaults: new { controller = "Admin", action = "Dashboard" });
+app.MapControllerRoute(
+    name: "AdminManageShop",
+    pattern: "admin/manage-shop",
+    defaults: new { controller = "Admin", action = "ManageShop" });
+
+app.MapControllerRoute(
+    name: "SellerDashboard",
+    pattern: "seller/dashboard",
+    defaults: new { controller = "Seller", action = "Dashboard" });
+app.MapControllerRoute(
+    name: "SellerManageBook",
+    pattern: "seller/manage-book",
+    defaults: new { controller = "Seller", action = "ManageBook" });
+app.MapControllerRoute(
+    name: "SellerManageOrder",
+    pattern: "seller/manage-order",
+    defaults: new { controller = "Seller", action = "ManageOrder" });
+
+app.MapControllerRoute(
+    name: "Default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.UseAuthorization();
 

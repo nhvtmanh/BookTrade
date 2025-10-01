@@ -1,4 +1,5 @@
 ﻿using BookTradeWebApp.Controllers;
+using BookTradeWebApp.Models;
 using BookTradeWebApp.Services;
 using Microsoft.AspNetCore.Mvc;
 

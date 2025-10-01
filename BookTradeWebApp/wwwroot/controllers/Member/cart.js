@@ -1,6 +1,9 @@
 ﻿$(document).ready(function () {
     LoadData();
     HandleSelectAllCheckbox();
+
+    // Disable Place Order button
+    $('#btnPlaceOrder').addClass('disabled-btn');
 });
 
 function LoadData() {
@@ -73,6 +76,7 @@ function LoadData() {
 function HandleInputCheckboxChange() {
     $('.input-checkbox-item').on('change', function () {
         HandleDisplayButtonDelete();
+        HandleDisableButtonPlaceOrder();
 
         if ($(this).is(':checked')) {
             // If all checkboxes are checked, check the "Select All" checkbox
@@ -109,21 +113,96 @@ function UpdateTotal() {
     $('#cartTotal').text(`${total.toLocaleString()} VND`);
 }
 
+function HandleDisableButtonPlaceOrder() {
+    const checkedItems = $('#cartTable .input-checkbox-item:checked').length;
+    if (checkedItems > 0) {
+        // Enable button
+        $('#btnPlaceOrder').removeClass('disabled-btn');
+        $('#btnPlaceOrder').prop('disabled', false);
+    } else {
+        // Disable button
+        $('#btnPlaceOrder').addClass('disabled-btn');
+        $('#btnPlaceOrder').prop('disabled', true);
+    }
+}
+
 function PlaceOrder() {
-    //$.ajax({
-    //    url: '/Member/Cart/PlaceOrder',
-    //    type: 'GET',
-    //    success: function (response) {
-    //        window.location.href = '/shop';
-    //        ShowToastNoti('success', response.message);
-    //    },
-    //    error: function (err) {
-    //        //Handle other errors (e.g., server errors)
-    //        ShowToastNoti('error', 'An error occurred, please try again.');
-    //    }
-    //});
-    const checkedItems = $('input.input-checkbox:checked');
-    console.log(checkedItems);
+    const address = $('#txtAddress').val().trim();
+    if (address === '') {
+        ShowToastNoti('warning', 'Please enter your shipping address');
+        return;
+    }
+
+    const bookIds = [];
+    const checkedItems = $('#cartTable .input-checkbox-item:checked');
+    checkedItems.each(function () {
+        const row = $(this).closest('tr');
+        const bookId = parseInt(row.data('bookid'));
+        bookIds.push(bookId);
+    });
+    if (bookIds.length === 0) {
+        ShowToastNoti('warning', 'Please select at least one book to place an order');
+        return;
+    }
+
+    // Check stock quantity
+    $.ajax({
+        url: '/Member/Order/CheckStockQuantity',
+        type: 'POST',
+        data: {
+            bookIds: bookIds
+        },
+        dataType: 'json',
+        success: function (response) {
+            if (response.statusCode === 200) {
+                if (response.data == true) {
+                    const paymentMethod = $('#sltPayment').val();
+                    if (paymentMethod === 'Online') {
+                        $.ajax({
+                            url: '/Member/Payment/CreatePaymentUrl',
+                            type: 'POST',
+                            data: {
+                                bookIds: bookIds,
+                                description: JSON.stringify({
+                                    bookIds: bookIds,
+                                    shippingAddress: address
+                                })
+                            },
+                            dataType: 'json',
+                            success: function (response) {
+                                if (response.statusCode === 200) {
+                                    const paymentUrl = response.data;
+                                    setTimeout(function () {
+                                        window.location.href = paymentUrl;
+                                    }, 1000);
+                                }
+                                else if (response.statusCode === 400 || response.statusCode === 403) {
+                                    ShowToastNoti('warning', response.message);
+                                }
+                            },
+                            error: function (err) {
+                                //Handle other errors (e.g., server errors)
+                                ShowToastNoti('error', 'An error occurred, please try again.');
+                            }
+                        });
+                    }
+                    else if (paymentMethod === 'COD') {
+
+                    }
+                }
+                else {
+                    ShowToastNoti('warning', response.message);
+                }
+            }
+            else if (response.statusCode === 404) {
+                ShowToastNoti('warning', response.message);
+            }
+        },
+        error: function (err) {
+            //Handle other errors (e.g., server errors)
+            ShowToastNoti('error', 'An error occurred, please try again.');
+        }
+    });
 }
 
 function SetQuantityDown(bookId) {
@@ -191,13 +270,13 @@ function HandleSelectAllCheckbox() {
             if ($('#cartTable tr[data-bookid]').length > 0) {
                 $('#btnDelete').fadeIn();
             }
-
-            UpdateTotal();
         } else {
             $('.input-checkbox-item').prop('checked', false);
             $('#btnDelete').fadeOut();
-            UpdateTotal();
         }
+
+        UpdateTotal();
+        HandleDisableButtonPlaceOrder();
     });
 }
 

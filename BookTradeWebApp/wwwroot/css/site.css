@@ -39,3 +39,8 @@ body {
     transform: translateX(-50%);
     z-index: 9999;
 }
+
+.disabled-btn {
+    color: #666 !important;
+    background-color: #f7f7f7 !important;
+}

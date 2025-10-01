@@ -39,7 +39,7 @@
 								Shipping address
 							</span>
 							<div class="bor8 mt-2">
-								<textarea class="stext-111 cl2 plh3 px-4 py-3 w-100" name="msg" placeholder="Shipping address"></textarea>
+								<textarea id="txtAddress" class="stext-111 cl2 plh3 px-4 py-3 w-100" name="msg" placeholder="Shipping address"></textarea>
 							</div>
 						</div>
 					</div>
@@ -60,10 +60,9 @@
 							</span>
 							<div class="respon6-next mt-2">
 								<div class="rs1-select2 bor8 bg0">
-									<select class="js-select2">
-										<option>Choose payment method</option>
-										<option>COD</option>
+									<select id="sltPayment" class="js-select2">
 										<option>Online</option>
+										<option>COD</option>
 									</select>
 									<div class="dropDownSelect2"></div>
 								</div>
@@ -85,7 +84,7 @@
 						</div>
 					</div>
 
-					<button type="button" onclick="PlaceOrder()" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+					<button type="button" onclick="PlaceOrder()" id="btnPlaceOrder" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" disabled>
 						Place Order
 					</button>
 				</div>
