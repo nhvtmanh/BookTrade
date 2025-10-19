@@ -19,7 +19,6 @@ builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddScoped<IS_Auth, S_Auth>();
-builder.Services.AddScoped<IS_BookExchange, S_BookExchange>();
 builder.Services.AddScoped<IS_File, S_File>();
 builder.Services.AddScoped<IS_Category, S_Category>();
 builder.Services.AddScoped<IS_Book, S_Book>();
@@ -55,6 +54,50 @@ app.MapControllerRoute(
     pattern: "register-seller",
     defaults: new { controller = "Auth", action = "RegisterSeller" });
 
+#region Admin
+app.MapAreaControllerRoute(
+    name: "Dashboard",
+    areaName: "Admin",
+    pattern: "admin/dashboard",
+    defaults: new { controller = "Dashboard", action = "Index" });
+
+app.MapAreaControllerRoute(
+    name: "ManageShop",
+    areaName: "Admin",
+    pattern: "admin/manage-shop",
+    defaults: new { controller = "ManageShop", action = "Index" });
+
+app.MapAreaControllerRoute(
+    name: "AdminDefault",
+    areaName: "Admin",
+    pattern: "{area}/{controller}/{action}/{id?}");
+#endregion
+
+#region Seller
+app.MapAreaControllerRoute(
+    name: "Dashboard",
+    areaName: "Seller",
+    pattern: "seller/dashboard",
+    defaults: new { controller = "Dashboard", action = "Index" });
+
+app.MapAreaControllerRoute(
+    name: "ManageBook",
+    areaName: "Seller",
+    pattern: "seller/manage-book",
+    defaults: new { controller = "ManageBook", action = "Index" });
+
+app.MapAreaControllerRoute(
+    name: "ManageOrder",
+    areaName: "Seller",
+    pattern: "seller/manage-order",
+    defaults: new { controller = "ManageOrder", action = "Index" });
+
+app.MapAreaControllerRoute(
+    name: "SellerDefault",
+    areaName: "Seller",
+    pattern: "{area}/{controller}/{action}/{id?}");
+#endregion
+
 #region Member
 app.MapAreaControllerRoute(
     name: "Shop",
@@ -73,37 +116,6 @@ app.MapAreaControllerRoute(
     areaName: "Member",
     pattern: "{area}/{controller}/{action}/{id?}");
 #endregion
-
-app.MapControllerRoute(
-    name: "BookExchange",
-    pattern: "book-exchange",
-    defaults: new { controller = "BookExchange", action = "Index" });
-app.MapControllerRoute(
-    name: "Book",
-    pattern: "book",
-    defaults: new { controller = "Book", action = "Index" });
-
-app.MapControllerRoute(
-    name: "AdminDashboard",
-    pattern: "admin/dashboard",
-    defaults: new { controller = "Admin", action = "Dashboard" });
-app.MapControllerRoute(
-    name: "AdminManageShop",
-    pattern: "admin/manage-shop",
-    defaults: new { controller = "Admin", action = "ManageShop" });
-
-app.MapControllerRoute(
-    name: "SellerDashboard",
-    pattern: "seller/dashboard",
-    defaults: new { controller = "Seller", action = "Dashboard" });
-app.MapControllerRoute(
-    name: "SellerManageBook",
-    pattern: "seller/manage-book",
-    defaults: new { controller = "Seller", action = "ManageBook" });
-app.MapControllerRoute(
-    name: "SellerManageOrder",
-    pattern: "seller/manage-order",
-    defaults: new { controller = "Seller", action = "ManageOrder" });
 
 app.MapControllerRoute(
     name: "Default",

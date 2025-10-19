@@ -1,0 +1,96 @@
+﻿@model M_Book
+
+<!-- Modal Header -->
+<div class="modal-header">
+    <h5 class="modal-title text-gray-900" id="bookModalLabel">
+        <span>Add new book</span>
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- Modal Body -->
+<div class="modal-body">
+    <form id="bookForm" method="post" asp-antiforgery="true" enctype="multipart/form-data">
+        <div class="row">
+            <!-- Title -->
+            <div class="col form-group">
+                <label asp-for="Title" class="text-gray-800">Title <span class="text-danger">*</span></label>
+                <textarea asp-for="Title" class="form-control" rows="2" placeholder="Enter the title ..." required></textarea>
+                <span asp-validation-for="Title"></span>
+            </div>
+
+            <!-- Description -->
+            <div class="col form-group">
+                <label asp-for="Description" class="text-gray-800">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="2" placeholder="Enter the description ..."></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Author -->
+            <div class="col form-group">
+                <label asp-for="Author" class="text-gray-800">Author</label>
+                <input asp-for="Author" class="form-control" placeholder="Enter the author ...">
+                <span asp-validation-for="Author"></span>
+            </div>
+
+            <!-- Stock Quantity -->
+            <div class="col form-group col">
+                <label asp-for="StockQuantity" class="text-gray-800">Stock Quantity <span class="text-danger">*</span></label>
+                <input asp-for="StockQuantity" class="form-control" placeholder="Enter the stock quantity ..." required>
+                <span asp-validation-for="StockQuantity"></span>
+            </div>
+
+            <!-- Base Price -->
+            <div class="col form-group col">
+                <label asp-for="BasePrice" class="text-gray-800">Base Price <span class="text-danger">*</span></label>
+                <input asp-for="BasePrice" class="form-control" placeholder="Enter the base price ..." required>
+                <span asp-validation-for="BasePrice"></span>
+            </div>
+
+            <!-- Discount Price -->
+            <div class="col form-group col">
+                <label asp-for="DiscountPrice" class="text-gray-800">Discount Price <span class="text-danger">*</span></label>
+                <input asp-for="DiscountPrice" class="form-control" placeholder="Enter the discount price ..." required>
+                <span asp-validation-for="DiscountPrice"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Image -->
+            <div class="col form-group">
+                <label asp-for="File" class="text-gray-800">Image</label>
+                <input asp-for="File" type="file" class="form-control-file" accept="image/*" />
+                <span asp-validation-for="File"></span>
+            </div>
+
+            <!-- Condition select -->
+            <div class="col form-group">
+                <label asp-for="Condition" class="text-gray-800">Condition <span class="text-danger">*</span></label>
+                <select asp-for="Condition" class="form-control" required>
+                    <option value="0">New</option>
+                    <option value="1">Old</option>
+                </select>
+                <span asp-validation-for="Condition"></span>
+            </div>
+
+            <!-- Category select -->
+            <div class="col form-group">
+                <label asp-for="CategoryId" class="text-gray-800">Category</label>
+                <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+                    <option value="">Select category</option>
+                </select>
+                <span asp-validation-for="CategoryId"></span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" onclick="Submit()">Save</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+</div>

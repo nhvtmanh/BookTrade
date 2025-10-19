@@ -5,7 +5,7 @@
         public enum Condition
         {
             New,
-            Old,
+            Old
         }
         public enum Status
         {

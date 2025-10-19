@@ -15,15 +15,5 @@ namespace BookTradeWebApp.Controllers
                 ViewBag.Categories = new SelectList(categories, "Id", "Name");
             }
         }
-
-        protected async Task SetDropDownBookExchange()
-        {
-            var res = await HttpContext.RequestServices.GetService<IS_BookExchange>()!.GetAll();
-            if (res.StatusCode == StatusCodes.Status200OK)
-            {
-                var bookExchanges = res.Data;
-                ViewBag.BookExchanges = new SelectList(bookExchanges, "Id", "Title");
-            }
-        }
     }
 }

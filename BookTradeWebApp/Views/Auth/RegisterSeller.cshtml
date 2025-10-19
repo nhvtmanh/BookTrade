@@ -1,0 +1,106 @@
+﻿@{
+    Layout = null;
+}
+
+@model M_Seller_Register
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookTrade</title>
+    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
+
+    <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="css/sb-admin-2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block" style="background-image: url('/images/bg_cover.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>
+
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create a Shop!</h1>
+                            </div>
+
+                            <form id="registerSellerForm" class="user" method="post" asp-antiforgery="true">
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <input asp-for="Name" class="form-control form-control-user" placeholder="Shop name" required>
+                                        <span asp-validation-for="Name" class="error"></span>
+                                    </div>
+
+                                    <div class="col form-group">
+                                        <input asp-for="File" type="file" class="form-control-file" accept="image/*" />
+                                        <span asp-validation-for="File" class="error"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input asp-for="Description" class="form-control form-control-user" placeholder="Shop description" required>
+                                    <span asp-validation-for="Description" class="error"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <input asp-for="FullName" class="form-control form-control-user" placeholder="Fullname" required>
+                                        <span asp-validation-for="FullName" class="error"></span>
+                                    </div>
+
+                                    <div class="col form-group">
+                                        <input asp-for="PhoneNumber" class="form-control form-control-user" placeholder="PhoneNumber" required>
+                                        <span asp-validation-for="PhoneNumber" class="error"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input asp-for="Address" class="form-control form-control-user" placeholder="Address" required>
+                                    <span asp-validation-for="Address" class="error"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <input asp-for="Email" class="form-control form-control-user" placeholder="Email address" required>
+                                        <span asp-validation-for="Email" class="error"></span>
+                                    </div>
+
+                                    <div class="col form-group">
+                                        <input asp-for="Password" class="form-control form-control-user" placeholder="Password" required>
+                                        <span asp-validation-for="Password" class="error"></span>
+                                    </div>
+                                </div>
+                                
+                                <button type="button" onclick="RegisterSeller()" class="btn btn-primary btn-user btn-block">Register</button>
+                            </form>
+
+                            <div class="text-center mt-3">
+                                <a class="small" href="/">Back to Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script src="controllers/auth.js" asp-append-version="true"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/site.js" asp-append-version="true"></script>
+</body>
+
+</html>

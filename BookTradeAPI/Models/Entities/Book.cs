@@ -31,7 +31,7 @@ public partial class Book
 
     public string? ImageUrl { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public int? CategoryId { get; set; }
 

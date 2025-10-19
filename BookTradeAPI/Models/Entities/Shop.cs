@@ -15,7 +15,7 @@ public partial class Shop
 
     public byte Status { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public int? UserId { get; set; }
 

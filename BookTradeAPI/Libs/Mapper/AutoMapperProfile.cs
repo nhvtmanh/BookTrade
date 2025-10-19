@@ -12,12 +12,6 @@ namespace BookTradeAPI.Libs.Mapper
             CreateMap<MReq_Book, Book>().ReverseMap();
             CreateMap<MRes_Book, Book>().ReverseMap();
 
-            CreateMap<MReq_BookExchange, BookExchange>().ReverseMap();
-            CreateMap<MRes_BookExchange, BookExchange>().ReverseMap();
-
-            CreateMap<MReq_BookExchangePost, BookExchangePost>().ReverseMap();
-            CreateMap<MRes_BookExchangePost, BookExchangePost>().ReverseMap();
-
             CreateMap<MReq_Category, Category>().ReverseMap();
             CreateMap<MRes_Category, Category>().ReverseMap();
 

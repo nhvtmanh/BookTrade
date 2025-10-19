@@ -14,7 +14,7 @@ namespace BookTradeAPI.Models.Response
 
         public byte Status { get; set; }
 
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public int? UserId { get; set; }
 

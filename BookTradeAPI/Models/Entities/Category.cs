@@ -9,7 +9,5 @@ public partial class Category
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<BookExchange> BookExchanges { get; set; } = new List<BookExchange>();
-
     public virtual ICollection<Book> Books { get; set; } = new List<Book>();
 }
