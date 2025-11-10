@@ -14,6 +14,8 @@ public partial class User : IdentityUser<int>
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual ICollection<Report> Reports { get; set; } = new List<Report>();

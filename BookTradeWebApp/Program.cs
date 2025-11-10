@@ -25,6 +25,7 @@ builder.Services.AddScoped<IS_Book, S_Book>();
 builder.Services.AddScoped<IS_Cart, S_Cart>();
 builder.Services.AddScoped<IS_Order, S_Order>();
 builder.Services.AddScoped<IS_Payment, S_Payment>();
+builder.Services.AddScoped<IS_Notification, S_Notification>();
 
 builder.Services.AddSingleton<IVnpay, Vnpay>();
 

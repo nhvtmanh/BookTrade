@@ -16,10 +16,12 @@ namespace BookTradeAPI.Services
     public class S_Order : IS_Order
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IS_Notification _s_Notification;
 
-        public S_Order(ApplicationDbContext dbContext)
+        public S_Order(ApplicationDbContext dbContext, IS_Notification s_Notification)
         {
             _dbContext = dbContext;
+            _s_Notification = s_Notification;
         }
 
         public async Task<ApiResponse<bool>> CheckStockQuantity(MReq_CheckStockQuantity request)
@@ -147,6 +149,19 @@ namespace BookTradeAPI.Services
                 await transaction.RollbackAsync();
                 throw;
             }
+
+            // Send notification after place order successfully
+            await _s_Notification.SendPlaceOrderSuccessfullyNotification(new MReq_Notification_PlaceOrder
+            {
+                OrderIdToImageUrl = orders.ToDictionary(
+                    x => x.Id,
+                    x => x.OrderItems
+                        .OrderBy(x => x.BookId)
+                        .FirstOrDefault()!
+                        .Book.ImageUrl!
+                    ),
+                UserId = userId
+            });
 
             response.Data = orders.Count;
             return response;

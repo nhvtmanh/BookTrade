@@ -1,5 +1,4 @@
 ﻿using BookTradeAPI.Models.Common;
-using BookTradeAPI.Models.Entities;
 using BookTradeWebApp.Models;
 
 namespace BookTradeWebApp.Services
@@ -7,7 +6,7 @@ namespace BookTradeWebApp.Services
     public interface IS_Order
     {
         Task<ApiResponse<bool>> CheckStockQuantity(M_CheckStockQuantity request);
-        Task<ApiResponse<Order>> PlaceOrder();
+        Task<ApiResponse<int>> PlaceOrder(M_PlaceOrder request);
     }
     public class S_Order : IS_Order
     {
@@ -33,18 +32,17 @@ namespace BookTradeWebApp.Services
             }
         }
 
-        public async Task<ApiResponse<Order>> PlaceOrder()
+        public async Task<ApiResponse<int>> PlaceOrder(M_PlaceOrder request)
         {
-            var response = await _httpClient.GetAsync("Order/PlaceOrder");
-
+            var response = await _httpClient.PostAsJsonAsync("Order/PlaceOrder", request);
             if (response.IsSuccessStatusCode)
             {
-                var res = await response.Content.ReadFromJsonAsync<ApiResponse<Order>>();
+                var res = await response.Content.ReadFromJsonAsync<ApiResponse<int>>();
                 return res!;
             }
             else
             {
-                var errorResponse = await response.Content.ReadFromJsonAsync<ApiResponse<Order>>();
+                var errorResponse = await response.Content.ReadFromJsonAsync<ApiResponse<int>>();
                 return errorResponse!;
             }
         }

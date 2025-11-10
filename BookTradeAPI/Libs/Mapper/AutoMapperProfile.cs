@@ -23,6 +23,9 @@ namespace BookTradeAPI.Libs.Mapper
             CreateMap<MRes_Shop, Shop>().ReverseMap();
 
             CreateMap<MRes_Cart, Cart>().ReverseMap();
+
+            CreateMap<MReq_Notification, Notification>().ReverseMap();
+            CreateMap<MRes_Notification_Detail, Notification>().ReverseMap();
         }
     }
 }

@@ -66,15 +66,11 @@ builder.Services.AddAuthentication(options =>
         {
             OnMessageReceived = context =>
             {
-                // For SignalR authentication over WebSocket
+                // For SignalR JWT authentication
                 var accessToken = context.Request.Query["access_token"];
                 var path = context.HttpContext.Request.Path;
-
-                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notificationHub"))
-                {
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/notification"))
                     context.Token = accessToken;
-                }
-
                 return Task.CompletedTask;
             }
         };
@@ -89,6 +85,7 @@ builder.Services.AddScoped<IS_Category, S_Category>();
 builder.Services.AddScoped<IS_Cart, S_Cart>();
 builder.Services.AddScoped<IS_Order, S_Order>();
 builder.Services.AddScoped<IS_Payment, S_Payment>();
+builder.Services.AddScoped<IS_Notification, S_Notification>();
 
 builder.Services.AddSingleton<IVnpay, Vnpay>();
 
@@ -152,6 +149,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<NotificationHub>("/notificationHub");
+app.MapHub<NotificationHub>("/hubs/notification");
 
 app.Run();

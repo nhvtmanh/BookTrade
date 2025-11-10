@@ -45,3 +45,16 @@ body {
     color: #666 !important;
     background-color: #f7f7f7 !important;
 }
+
+.dropdown-menu-center {
+    transform: translate(-50%, 8%) !important;
+}
+
+.notification-item {
+    border-bottom: 1px solid #ccc !important;
+}
+
+/* Hide the notification badge when data-notify is 0 */
+#notificationBadge[data-notify="0"].icon-header-noti::after {
+    display: none !important;
+}

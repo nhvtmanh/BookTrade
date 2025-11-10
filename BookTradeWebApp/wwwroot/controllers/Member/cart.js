@@ -187,7 +187,29 @@ function PlaceOrder() {
                         });
                     }
                     else if (paymentMethod === 'COD') {
-
+                        $.ajax({
+                            url: '/Member/Order/PlaceOrder',
+                            type: 'POST',
+                            data: {
+                                bookIds: bookIds,
+                                address: address
+                            },
+                            dataType: 'json',
+                            success: function (response) {
+                                if (response.statusCode === 200) {
+                                    setTimeout(function () {
+                                        window.location.href = '/member/shop';
+                                    }, 1000);
+                                }
+                                else if (response.statusCode === 400 || response.statusCode === 404) {
+                                    ShowToastNoti('warning', response.message);
+                                }
+                            },
+                            error: function (err) {
+                                //Handle other errors (e.g., server errors)
+                                ShowToastNoti('error', 'An error occurred, please try again.');
+                            }
+                        });
                     }
                 }
                 else {
